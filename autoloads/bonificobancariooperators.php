@@ -59,7 +59,7 @@ class BonificoBancarioOperator
                         $parameterKey = 'NoteNodeID';
                     }
                     $operatorValue = eZINI::instance('bonificobancario.ini')->variable('Settings', $parameterKey);
-                    if (class_exists('OCPaymentRecipient')){
+                    if (class_exists('OCPaymentRecipient') && in_array('ocpaymentrecipient', eZExtension::activeExtensions())){
                         /** @var eZOrder $order */
                         $order = $namedParameters['order'];
                         foreach ($order->productItems() as $product){
