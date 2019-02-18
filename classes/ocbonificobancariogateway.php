@@ -8,7 +8,13 @@ class OCBonificoBancarioGateway extends eZPaymentGateway
     {
         $processParameters = $process->attribute( 'parameter_list' );
         $order = eZOrder::fetch( $processParameters['order_id'] );
-        $order->setStatus( 1001 );
+
+        $orderStatus = (int)eZINI::instance('bonificobancario.ini')->variable('Settings', 'OrderStatus');
+        if ($orderStatus == 0){
+            $orderStatus = 1001;
+        }
+        $order->setStatus( $orderStatus );
+
         $order->store();
         return eZWorkflowType::STATUS_ACCEPTED;
     }
